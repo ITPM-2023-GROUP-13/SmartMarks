@@ -12,6 +12,7 @@ import {
         getAllStudents, 
         getAllSubjects, 
         getAllTeachers, 
+        getSubjectDetails, 
         updateMark, 
         updateStudent,
         updateSubject,
@@ -29,11 +30,13 @@ router.get("/getAllStudents",getAllStudents)
 router.get("/getAllSubjects",getAllSubjects)
 router.get("/getAllTeachers",getAllTeachers)
 router.get("/getAllMarks",getAllMarks)
+router.get("/getSubjectDetails/:id",getSubjectDetails)
 
-router.put("/updateStudent", updateStudent);
-router.put("/updateSubject", updateSubject);
-router.put("/updateMark", updateMark);
-router.put("/updateTeacher", updateTeacher);
+
+router.put("/updateStudent/:id", updateStudent);
+router.put("/updateSubject/:id", updateSubject);
+router.put("/updateMark/:id", updateMark);
+router.put("/updateTeacher/:id", updateTeacher);
 
 router.delete("/deleteStudent/:id", deleteStudent);
 router.delete("/deleteSubject/:id", deleteSubject);

@@ -123,15 +123,28 @@ export const addStudent = async (req, res) => {
   };
 
 
+  export const getSubjectDetails = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const subjectDetails = await Subject.findById(id);
+      //console.log("Subject",subjectDetails)
+
+      res.status(200).json(subjectDetails);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  };
+
 
   export const updateStudent = async (req, res) => {
-    const { _id, name,  grade  } = req.body;
+    const { name,  grade  } = req.body;
     try {
       await Student.findByIdAndUpdate(_id, {
         name: name,
         grade:grade
       });
-   
+   //console.log("student updated:::",id)
       res.status(200).json({ message: "successfully updated" });
     } catch (error) {
       res.status(404).json({ message: error.message });
@@ -154,9 +167,10 @@ export const addStudent = async (req, res) => {
   };
 
   export const updateSubject = async (req, res) => {
-    const { _id, grade,  subject  } = req.body;
+    const subjectId = req.params.id
+    const { grade,  subject  } = req.body;
     try {
-      await Subject.findByIdAndUpdate(_id, {
+      await Subject.findByIdAndUpdate(subjectId, {
         grade: grade,
         subject:subject
       });

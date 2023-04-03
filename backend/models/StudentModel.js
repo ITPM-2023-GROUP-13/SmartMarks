@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 
 const studentSchema = mongoose.Schema({
-  reg_no: {type:String, required: true},
+  // _id: mongoose.Schema.Types.ObjectId,
+  //reg_no: {type:String, required: true},
+  reg_no:String,
   name:String,
   grade:String
 

@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 function StudentList() {
   
   const [tableData, setTableData] = useState([]);
-  const navigate = useNavigate();;
+  const navigate = useNavigate();
 
     useEffect(()=>{
         axios.get("http://localhost:5000/teacher/getAllStudents")

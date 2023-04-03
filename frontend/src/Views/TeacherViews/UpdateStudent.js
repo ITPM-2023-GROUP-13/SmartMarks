@@ -2,43 +2,46 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./Form.css";
 
-function UpdateStudent (props){
-    const { row } = props.location.state;
-    console.log('props', row);
-  
+function UpdateStudent (){
+    const [id,setStudentID] = useState()
     const [reg_no, setRegNo] = useState("");
     const [name, setName] = useState("");
     const [grade, setGrade] = useState("");
   
     useEffect(() => {
-      setRegNo(row.reg_no);
-      setName(row.name);
-      setGrade(row.grade);
-    }, [row]);
-  
+        const URL_path = window.location.pathname;
+        const studentID = URL_path.substring(URL_path.length - 24);
+        console.log("student:::",studentID)
+        setStudentID(studentID)
+    }, []);
+
+    useEffect(() => {
+        if (id) {
+          axios.get(`http://localhost:5000/teacher/getstudentdetails/${id}`)
+            .then(response => {
+              //console.log("response",response.data)
+              setRegNo(response.data.reg_no)
+              setName(response.data.name)
+              setGrade(response.data.grade)
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      }, [id]);
+
+
     const handleSubmit = async (event) => {
       event.preventDefault();
       const updatedStudent = { reg_no, name, grade };
-  
+        console.log("updatedStudent:::",updatedStudent)
       try {
-        await axios.put(`http://localhost:5000/teacher/updateStudent/${row._id}`, updatedStudent);
+        await axios.put(`http://localhost:5000/teacher/updateStudent/${id}`, updatedStudent);
         console.log("Student Updated");
       } catch (error) {
         console.log(error);
       }
     };
-    // await axios.get(
-    //     `https://www.googleapis.com/customsearch/v1?key=AIzaSyBYW4B8xzKMApVvzVevwJi4r4IcnuuZFnY&cx=66ac6fa7ccb7d4eca&q=${name}&num=5`
-    //   ).then((response)=>{       
-    //     setSearchResults(response.data.items)
-
-    //     console.log("Response1",response.data.items)
-    //   }).catch((err)=>{
-    //     console.log(err)
-    //  })
-      
-
-
 
 return(
         <>
