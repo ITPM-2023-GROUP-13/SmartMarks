@@ -7,15 +7,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import { blueGrey, green, grey, orange, red, yellow } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
 
 function SubjectList() {
     
     const [tableData, setTableData] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         axios.get("http://localhost:5000/teacher/getAllSubjects")
         .then(response => {
-            console.log("response",response.data)
+            //console.log("response",response.data)
           setTableData(response.data);
         })
         .catch(error => {
@@ -32,6 +34,10 @@ function SubjectList() {
           console.error('Error deleting record:', error);
         }
       }
+
+      const handleEdit = (row) => {
+        navigate(`/Teacher/UpdateSubject/${row._id}`);
+    }
 
     return(
         <>
@@ -56,11 +62,10 @@ function SubjectList() {
 
                     <td>
                     <Button 
-                        href="/Teacher/UpdateSubject"
                         variant="contained" 
                         startIcon={<EditIcon/> } 
                         sx={{marginBottom:2,backgroundColor:orange[900]}}
-                        
+                        onClick={()=>handleEdit(row)}
                     >Edit</Button>
                     </td>
 
