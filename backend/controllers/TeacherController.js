@@ -174,7 +174,7 @@ export const addStudent = async (req, res) => {
         grade: grade,
         subject:subject
       });
-   
+   console.log("updatedDetails",req.body)
       res.status(200).json({ message: "successfully updated" });
     } catch (error) {
       res.status(404).json({ message: error.message });
