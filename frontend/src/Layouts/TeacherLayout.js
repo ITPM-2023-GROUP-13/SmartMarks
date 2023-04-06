@@ -41,14 +41,8 @@ return(
         </Grid>
         
         {/* ================================SideBar============================ */}
-        <Media query="(max-width: 900px)">
-            {(matches) => {
-                return matches ? (
-                    <Grid item sm={12} md={12} xs={12} sx={{ paddingTop: { xs: '100px', sm: '100px' } }}>
-                      {null}
-                    </Grid>
-                ) : (
-                    <Grid item md={2} lg={1.5} sx={{ position: 'relative', paddingTop: { md: '60px', lg: '80px', zIndex:'0' } ,paddingBottom:28}}>
+       
+                    <Grid item xs={2} sm={2} md={2} lg={1.5} sx={{ position: 'absolute', paddingTop:'70px' ,paddingBottom:28}}>
                           <List sx={{mt:'30px',ml:'10px'}}>
                           <ListItemButton href="/Teacher">
                                     <ListItemIcon><HomeIcon/></ListItemIcon>
@@ -77,11 +71,9 @@ return(
                         </List>
                         
                     </Grid>
-                );
-            }}
-        </Media>
+  
         
-        {/* ========================================Body============================== */}
+  
 
         <Grid
         
@@ -90,7 +82,7 @@ return(
             sm={12}
             md={10}
             lg={10.5}
-            sx={{ padding: { xs: '20px 20px', sm: '20px 20px', md: '120px 20px', lg: '100px 20px' }, position: 'relative' }}
+            sx={{ padding: { xs: '80px 20px', sm: '80px 20px', md: '80px 20px', lg: '80px 20px' }, position: 'relative' ,marginLeft:"200px"}}
         >
             
             <Outlet />
