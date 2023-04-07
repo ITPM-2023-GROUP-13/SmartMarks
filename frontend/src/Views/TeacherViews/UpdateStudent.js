@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./Form.css";
+import { useNavigate } from "react-router-dom";
 
 function UpdateStudent (){
+    const navigate = useNavigate();
     const [id,setStudentID] = useState()
     const [reg_no, setRegNo] = useState("");
     const [name, setName] = useState("");
@@ -41,6 +43,7 @@ function UpdateStudent (){
       } catch (error) {
         console.log(error);
       }
+      navigate(`/Teacher/StudentList`);
     };
 
 return(

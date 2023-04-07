@@ -1,18 +1,21 @@
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import  "./Table.css";
-import { Button } from "@mui/material";
+import { Button , Paper, IconButton, Grid ,InputBase } from "@mui/material";
 import axios from "axios";
+import { blueGrey, green, grey, orange, red, yellow } from "@mui/material/colors";
+import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
-import { blueGrey, green, grey, orange, red, yellow } from "@mui/material/colors";
-import { useNavigate } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
 
 
 function StudentList() {
   
   const [tableData, setTableData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const navigate = useNavigate();
 
     useEffect(()=>{
@@ -20,6 +23,7 @@ function StudentList() {
         .then(response => {
             // console.log("response",response.data)
           setTableData(response.data);
+          setFilteredData(response.data);
         })
         .catch(error => {
           console.log(error);
@@ -42,22 +46,68 @@ function StudentList() {
         navigate(`/Teacher/UpdateStudent/${row._id}`);
     }
 
+    const handleSearch = (event) => {
+      const searchedValue = event.target.value.toLowerCase();
+      setSearchQuery(searchedValue)
+    }
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const filtered = tableData.filter((row) => {
+        return row.reg_no.toLowerCase().includes(searchQuery) ||
+          row.name.toLowerCase().includes(searchQuery) ||
+          row.grade.toLowerCase().includes(searchQuery)
+      });
+      setFilteredData(filtered);
+    }
+
     return(
         <>
         <h1>Student List</h1>
        
           <div className="table-container">
+
+          <Grid container spacing={1} justifyContent="center"  marginBottom={"10px"}>
+          
+              <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 , marginRight:3 }}>
+                  <InputBase
+                    sx={{ ml: 1, flex: 1 }}
+                    placeholder="Search here"
+                    onChange={handleSearch}
+                    onKeyPress={(event) => {
+                      // console.log(`Pressed keyCode ${ev.key}`);
+                      if (event.key === 'Enter') {
+                        event.preventDefault()
+                        const filtered = tableData.filter((row) => {
+                          return row.reg_no.toLowerCase().includes(searchQuery) ||
+                            row.name.toLowerCase().includes(searchQuery) ||
+                            row.grade.toLowerCase().includes(searchQuery)
+                        });
+                        setFilteredData(filtered);
+                      }
+                    }}
+                  />
+                  <IconButton type="submit" sx={{ p: '10px' }} aria-label="search" onClick={handleSubmit}>
+                    <SearchIcon />
+                  </IconButton>
+            </Paper>
+
+            <Button href="/Teacher/AddStudent" variant="contained" startIcon={<AddIcon/> } sx={{marginBottom:2,backgroundColor:green[900]}}>Add</Button>
+            
+            </Grid>
+
             <table className="table">
                 <thead>
                 <tr>
                     <th>Reg NO</th>
                     <th>Name</th>
                     <th>Grade</th>
-                    <Button href="/Teacher/AddStudent" variant="contained" startIcon={<AddIcon/> } sx={{marginBottom:2,backgroundColor:green[900]}}>Add a student</Button>
+                    <th>Actions</th>
+                    
                 </tr>
                 </thead>
                 <tbody>
-                {tableData.map((row, index) => (
+                {filteredData.map((row, index) => (
                     <tr key={index}>
                     <td>{row.reg_no}</td>
                     <td>{row.name}</td>
@@ -68,13 +118,11 @@ function StudentList() {
 
                         variant="contained" 
                         startIcon={<EditIcon/> } 
-                        sx={{marginBottom:2,backgroundColor:orange[900]}}
+                        sx={{marginBottom:2, marginRight:5 , backgroundColor:orange[900]}}
                         onClick={()=>handleEdit(row)}
                         
                     >Edit</Button>
-                    </td>
 
-                    <td>
                     <Button
 
                         variant="contained" 
