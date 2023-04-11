@@ -1,22 +1,28 @@
 
 import React, { useEffect, useState } from "react";
 import  "./Table.css";
-import { Button } from "@mui/material";
 import axios from "axios";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
 import { blueGrey, green, grey, orange, red, yellow } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
+import { Button , Paper, IconButton, Grid ,InputBase } from "@mui/material";
 
 function TeacherList() {
     
     const [tableData, setTableData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         axios.get("http://localhost:5000/teacher/getAllTeachers")
         .then(response => {
            // console.log("response",response.data)
           setTableData(response.data);
+          setFilteredData(response.data);
         })
         .catch(error => {
           console.log(error);
@@ -33,34 +39,88 @@ function TeacherList() {
         }
       }
 
+
+      const handleEdit = (row) => {
+        navigate(`/Teacher/UpdateTeacher/${row._id}`);
+    }
+
+    const handleSearch = (event) => {
+      const searchedValue = event.target.value.toLowerCase();
+      setSearchQuery(searchedValue)
+    }
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const filtered = tableData.filter((row) => {
+        return row.reg_no.toLowerCase().includes(searchQuery) ||
+          row.name.toLowerCase().includes(searchQuery) ||
+          row.subject.toLowerCase().includes(searchQuery)
+      });
+      setFilteredData(filtered);
+    }
+
     return(
         <>
-        <h1>Teacher List</h1>
+        <h2>Teachers</h2>
        
           <div className="table-container">
+
+          <Grid container spacing={1} justifyContent="center"  marginBottom={"10px"}>
+          
+          <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 , marginRight:3 }}>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search here"
+                onChange={handleSearch}
+                onKeyPress={(event) => {
+                  // console.log(`Pressed keyCode ${ev.key}`);
+                  if (event.key === 'Enter') {
+                    event.preventDefault()
+                    const filtered = tableData.filter((row) => {
+                      return row.reg_no.toLowerCase().includes(searchQuery) ||
+                        row.name.toLowerCase().includes(searchQuery) ||
+                        row.subject.toLowerCase().includes(searchQuery)
+                    });
+                    setFilteredData(filtered);
+                  }
+                }}
+              />
+              <IconButton type="submit" sx={{ p: '10px' }} aria-label="search" onClick={handleSubmit}>
+                <SearchIcon />
+              </IconButton>
+        </Paper>
+
+        <Button href="/Teacher/AddTeacher" variant="contained" startIcon={<AddIcon/> } sx={{marginBottom:2,backgroundColor:green[900]}}>Add</Button>
+        
+        </Grid>
+
             <table className="table">
                 <thead>
                 <tr>
                     <th>Reg NO</th>
                     <th>Name</th>
                     <th>Subject</th>
-                    <Button href="/Teacher/AddTeacher" variant="contained" startIcon={<AddIcon/> } sx={{marginBottom:2,backgroundColor:green[900]}}>Add a teacher</Button>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                {tableData.map((row, index) => (
+                {filteredData.map((row, index) => (
                     <tr key={index}>
                     <td>{row.reg_no}</td>
                     <td>{row.name}</td>
                     <td>{row.subject}</td>
 
                     <td>
-                    <Button href="/Teacher/UpdateTeacher"  variant="contained"  startIcon={<EditIcon/> } sx={{marginBottom:2,backgroundColor:orange[900]}} onc>Edit</Button>
-                    </td>
+                    <Button 
 
-                    <td>
+                        variant="contained" 
+                        startIcon={<EditIcon/> } 
+                        sx={{marginBottom:2, marginRight:5 , backgroundColor:orange[900]}}
+                        onClick={()=>handleEdit(row)}
+                        
+                    >Edit</Button>
+
                     <Button
-
                         variant="contained" 
                         startIcon={<DeleteIcon/> } 
                         sx={{marginBottom:2,backgroundColor:red[900]}}

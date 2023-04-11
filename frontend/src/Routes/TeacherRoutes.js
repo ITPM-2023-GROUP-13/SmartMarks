@@ -35,7 +35,7 @@ const TeacherRoutes =
         element: <AddTeacher/>,
       },   
       {
-        path: "/Teacher/UpdateTeacher",
+        path: "/Teacher/UpdateTeacher/:id",
         element: <UpdateTeacher/>,
       },
       {

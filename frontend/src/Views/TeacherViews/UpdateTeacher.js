@@ -1,26 +1,50 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Form.css";
 
 function UpdateTeacher (){
-
+const navigate = useNavigate();
+const [id, setTeacherID] = useState();
 const [reg_no, setRegNo] = useState("");
 const [name, setName] = useState("");
 const [subject, setSubject] = useState("");
 
 
-const handleSubmit = (event) => {
-  
-    // event.preventDefault();
-    // const newTeacher={ reg_no, name, subject}
+useEffect(() => {
+    const URL_path = window.location.pathname;
+    const teacherID = URL_path.substring(URL_path.length - 24);
+    setTeacherID(teacherID)
+}, []);
 
-    // axios.post("http://localhost:5000/Teacher/AddTeacher",newTeacher).then(()=>{
-    //     console.log("Teacher Added")
-    // }).catch((err)=>{
-    //     console.log(err)
-    // })
+useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:5000/teacher/getteacherdetails/${id}`)
+        .then(response => {
+          //console.log("response",response.data)
+          setRegNo(response.data.reg_no)
+          setName(response.data.name)
+          setSubject(response.data.subject)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }, [id]);
+
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const updatedTeacher = { reg_no, name, subject };
+    //console.log("updatedTeacher:",updatedTeacher)
+  try {
+    await axios.put(`http://localhost:5000/teacher/updateTeacher/${id}`, updatedTeacher);
+    console.log("Teacher Updated");
+  } catch (error) {
+    console.log(error);
+  }
+  navigate(`/Teacher/TeacherList`);
 };
-
 
 return(
         <>
