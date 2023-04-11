@@ -63,7 +63,7 @@ function StudentList() {
 
     return(
         <>
-        <h1>Student List</h1>
+        <h2>Students</h2>
        
           <div className="table-container">
 

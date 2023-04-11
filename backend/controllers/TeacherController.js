@@ -122,6 +122,16 @@ export const addStudent = async (req, res) => {
     }
   };
 
+  export const getTeacherDetails = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const teacherDetails = await Teacher.findById(id);
+      res.status(200).json(teacherDetails);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  };
 
   export const getSubjectDetails = async (req, res) => {
     const { id } = req.params;
@@ -167,9 +177,10 @@ export const addStudent = async (req, res) => {
 
 
   export const updateTeacher = async (req, res) => {
-    const { _id, name,  subject  } = req.body;
+    const teacherId = req.params.id
+    const { name,  subject  } = req.body;
     try {
-      await Teacher.findByIdAndUpdate(_id, {
+      await Teacher.findByIdAndUpdate(teacherId, {
         name: name,
         subject:subject
       });

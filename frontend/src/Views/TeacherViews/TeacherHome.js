@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from '@mui/material';
-import { Divider, Grid, ListItemButton, Typography } from "@mui/material";
+import { Divider, Grid, ListItemButton, Typography ,Link} from "@mui/material";
 import Box from "@mui/material/Box/Box";
 
 function TeacherHome (){
@@ -9,6 +8,7 @@ return(
     <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', marginTop:2}}>
     
         <Grid item xl={3} lg={4} md={6} sm={8} xs={12}>
+            <Link href="/Teacher/TeacherList">
             <Box sx={{    
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
@@ -21,9 +21,11 @@ return(
                 {/* <Typography>Teachers Count</Typography> */}
 
             </Box>
+            </Link>
         </Grid>
 
         <Grid item xl={3} lg={4} md={6} sm={8} xs={12}>
+            <Link href="/Teacher/StudentList">
             <Box sx={{
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
@@ -35,9 +37,11 @@ return(
                     {/* <Typography>Students Count</Typography> */}
 
             </Box>
+            </Link >
         </Grid>
 
         <Grid item xl={3} lg={4} md={6} sm={8} xs={12}>
+            <Link href="/Teacher/SubjectList">
             <Box sx={{
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -49,9 +53,11 @@ return(
                     {/* <Typography>Subjects Count</Typography> */}
 
             </Box>
+            </Link>
         </Grid>
 
         <Grid item xl={3} lg={4} md={6} sm={8} xs={12}>
+            <Link href="/Teacher/MarkList">
             <Box sx={{
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -63,10 +69,12 @@ return(
                     {/* <Typography>Marks Count</Typography> */}
 
             </Box>
+            </Link> 
         </Grid>
 
 
         <Grid item xl={3} lg={4} md={6} sm={8} xs={12}>
+            <Link href="#">
             <Box sx={{
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -78,9 +86,11 @@ return(
                     {/* <Typography>Parent Messages Count</Typography> */}
 
             </Box>
+            </Link>
         </Grid>
 
         <Grid item xl={3} lg={4} md={6} sm={8} xs={12}>
+            <Link href="#">
             <Box sx={{
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -92,6 +102,7 @@ return(
                     {/* <Typography>Parent Messages Count</Typography> */}
 
             </Box>
+            </Link>
         </Grid>
 
     </Grid>
