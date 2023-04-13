@@ -71,7 +71,7 @@ const TeacherRoutes =
         element: <AddMark/>,
       },
       {
-        path: "/Teacher/UpdateMark",
+        path: "/Teacher/UpdateMark/:id",
         element: <UpdateMark/>,
       },
 

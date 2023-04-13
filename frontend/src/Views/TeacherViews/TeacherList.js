@@ -33,6 +33,7 @@ function TeacherList() {
         try {
           await axios.delete(`http://localhost:5000/teacher/deleteTeacher/${row._id}`);
           setTableData(tableData.filter((p) => p._id !== row._id));
+          setFilteredData(filteredData.filter((p) => p._id !== row._id));
           console.log('Record deleted successfully');
         } catch (error) {
           console.error('Error deleting record:', error);
@@ -67,7 +68,7 @@ function TeacherList() {
 
           <Grid container spacing={1} justifyContent="center"  marginBottom={"10px"}>
           
-          <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 , marginRight:3 }}>
+          <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 , marginRight:3 ,backgroundColor:"#2F7D8C" }}>
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search here"

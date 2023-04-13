@@ -122,6 +122,18 @@ export const addStudent = async (req, res) => {
     }
   };
 
+
+  export const getMarkDetails = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const markDetails = await Mark.findById(id);
+      res.status(200).json(markDetails);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+    }
+  };
+
   export const getTeacherDetails = async (req, res) => {
     const { id } = req.params;
   
@@ -207,9 +219,10 @@ export const addStudent = async (req, res) => {
   };
 
   export const updateMark = async (req, res) => {
-    const { _id, studentRegNO, subjectCode, mark } = req.body;
+    const markId = req.params.id
+    const { studentRegNO, subjectCode, mark } = req.body;
     try {
-      await Subject.findByIdAndUpdate(_id, {
+      await Mark.findByIdAndUpdate(markId, {
         studentRegNO: studentRegNO,
         subjectCode:subjectCode,
         mark:mark

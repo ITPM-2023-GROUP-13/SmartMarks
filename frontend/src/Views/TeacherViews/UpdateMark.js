@@ -1,24 +1,53 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Form.css";
+import { useNavigate } from "react-router-dom";
 
 function UpdateMark (){
 
-const [studentRegNO, setRegNo] = useState("");
-const [subjectCode, setsubject] = useState("");
-const [mark, setMark] = useState("");
+    const navigate = useNavigate();
+    const [id,setMarkID] = useState()
+    
+
+    const [studentRegNO, setRegNo] = useState("");
+    const [subjectCode, setsubject] = useState("");
+    const [mark, setMark] = useState("");
+
+useEffect(() => {
+    const URL_path = window.location.pathname;
+    const markID = URL_path.substring(URL_path.length - 24);
+    console.log("mark:",markID)
+    setMarkID(markID)
+}, []);
+
+
+useEffect(() => {
+    if (id) {
+      axios.get(`http://localhost:5000/teacher/getmarkdetails/${id}`)
+        .then(response => {
+          //console.log("response",response.data)
+          setRegNo(response.data.studentRegNO)
+          setsubject(response.data.subjectCode)
+          setMark(response.data.mark)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }, [id]);
+
 
 const handleSubmit = async (event) => {
-  
-    // event.preventDefault();
-    // const newMark={ studentRegNO, subjectCode, mark}
-
-    // axios.post("http://localhost:5000/Teacher/AddMark",newMark).then(()=>{
-    //     console.log("Mark Added")
-    // }).catch((err)=>{
-    //     console.log(err)
-    // })
-
+  event.preventDefault();
+  const updatedMark = { studentRegNO, subjectCode, mark };
+    console.log("updatedMark:::",updatedMark)
+  try {
+    await axios.put(`http://localhost:5000/teacher/updateMark/${id}`, updatedMark);
+    // console.log("Mark Updated");
+  } catch (error) {
+    console.log(error);
+  }
+  navigate(`/Teacher/MarkList`);
 };
     
 
