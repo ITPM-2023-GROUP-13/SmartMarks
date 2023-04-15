@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Form.css";
 
 function AddStudent (){
-
+const navigate = useNavigate();
 const [reg_no, setRegNo] = useState("");
 const [name, setName] = useState("");
 const [grade, setGrade] = useState("");
@@ -31,7 +32,7 @@ const handleSubmit = async (event) => {
     //     console.log(err)
     //  })
       
-
+    navigate(`/Teacher/StudentList`);
 };
 
 return(
