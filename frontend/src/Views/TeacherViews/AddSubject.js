@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import "./Form.css";
+import { useNavigate } from "react-router-dom";
 
 function AddSubject (){
-
+const navigate = useNavigate();
 const [sub_code, setSubCode] = useState("");
 const [subject, setSubject] = useState("");
 const [grade, setGrade] = useState("");
@@ -19,6 +20,8 @@ const handleSubmit = async (event) => {
         console.log(err)
     })
 
+
+    navigate(`/Teacher/SubjectList`);
 };
     
 

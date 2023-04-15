@@ -90,7 +90,7 @@ function MarkList() {
               </IconButton>
         </Paper>
 
-        <Button href="/Teacher/AddStudent" variant="contained" startIcon={<AddIcon/> } sx={{marginBottom:2,backgroundColor:green[900]}}>Add</Button>
+        <Button href="/Teacher/AddMark" variant="contained" startIcon={<AddIcon/> } sx={{marginBottom:2,backgroundColor:green[900]}}>Add</Button>
         
         </Grid>
             <table className="table">
