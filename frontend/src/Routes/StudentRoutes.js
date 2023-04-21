@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import StudentLayout from '../Layouts/StudentLayout';
 import HomeStudent from '../Views/StudentViews/StudentHome';
+import StudentReport from '../Views/StudentViews/StudentReport';
 
 const StudentRoutes = 
 // createBrowserRouter ([
@@ -15,8 +16,12 @@ const StudentRoutes =
     //     element: <HomeTeacher />,
     //   },
       {
-        path: "/Student",
+        path: "/Student/resources",
         element: <HomeStudent/>,
+      },
+      {
+        path: "/Student/:id",
+        element: <StudentReport/>,
       }
 
     ]}

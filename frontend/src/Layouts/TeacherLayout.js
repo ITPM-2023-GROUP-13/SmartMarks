@@ -11,6 +11,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Divider, Grid, ListItemButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import Button from '@mui/material/Button';
 
 // ---------Mui-Icons-----------------
 
@@ -35,9 +36,13 @@ return(
             md={12}
             sx={{ padding: '5px', zIndex: '1', backgroundColor:"#18266e", position: 'fixed', width: '100%' }}
         >
-       
-            <h2 style={{textAlign:"start", marginLeft:15}}>SmartMarks</h2>
-        
+            <Box sx={{display:"flex"}}>
+                <h1 style={{textAlign:"start", marginLeft:15 ,color:"white"}}>SmartMarks</h1>
+
+                <Button href="/" sx={{right:27 ,top:25, position:"absolute"}}>
+                <Typography sx={{fontSize:20,color:"white"}}>Logout</Typography>
+                </Button>
+            </Box>
         </Grid>
         
         {/* ================================SideBar============================ */}
@@ -82,7 +87,7 @@ return(
             sm={12}
             md={10}
             lg={10.5}
-            sx={{ padding: { xs: '80px 20px', sm: '80px 20px', md: '80px 20px', lg: '80px 20px' }, position: 'relative' ,marginLeft:"200px"}}
+            sx={{ padding: { xs: '80px 20px', sm: '80px 20px', md: '80px 20px', lg: '80px 20px' }, position: 'relative' ,marginLeft:"200px" ,marginBottom:"0px"}}
         >
             
             <Outlet />

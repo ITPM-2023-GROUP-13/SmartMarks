@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Grid, Link, Typography } from '@mui/material';
 
 
 function StudentHome (){
+
 return(
     <Grid container spacing={2} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
     

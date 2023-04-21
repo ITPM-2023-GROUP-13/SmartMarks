@@ -64,7 +64,7 @@ const handleSubmit = async (event) => {
 
 return(
         <>
-        {/* <h1>Add a Mark</h1> */}
+        <h2>Add a Mark</h2>
         <div className="form-container">
         <form onSubmit={handleSubmit}>
             <label>

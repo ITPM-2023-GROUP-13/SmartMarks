@@ -5,7 +5,7 @@
 
 form{
     border-radius: 20px;
-    padding: 3em;
+    padding: 30px;
     background: white;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
@@ -33,7 +33,7 @@ form{
     border-radius: 4px;
     box-sizing: border-box;
     margin-top: 6px;
-    margin-bottom: 16px;
+    margin-bottom: 6px;
     resize: vertical;
   }
 
