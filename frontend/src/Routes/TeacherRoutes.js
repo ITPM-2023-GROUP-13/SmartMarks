@@ -23,7 +23,7 @@ const TeacherRoutes =
     element: <TeacherLayout />,
     children: [
       {
-        path: "/Teacher",
+        path: "/Teacher/:id",
         element: <HomeTeacher />,
       },
       {

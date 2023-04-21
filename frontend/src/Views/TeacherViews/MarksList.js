@@ -65,7 +65,7 @@ function MarkList() {
        
           <div className="table-container">
 
-          <Grid container spacing={1} justifyContent="center"  marginBottom={"10px"}>
+          <Grid container spacing={1} justifyContent="center"  marginBottom={"10px"} >
           
           <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 , marginRight:3 ,backgroundColor:"#2F7D8C"}}>
               <InputBase
