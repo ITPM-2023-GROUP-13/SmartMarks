@@ -9,6 +9,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
+import DownloadIcon from '@mui/icons-material/Download';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 
 function StudentList() {
@@ -43,6 +46,7 @@ function StudentList() {
         }
       }
 
+      
 
       const handleEdit = (row) => {
         navigate(`/Teacher/UpdateStudent/${row._id}`);
@@ -61,6 +65,20 @@ function StudentList() {
           row.grade.toLowerCase().includes(searchQuery)
       });
       setFilteredData(filtered);
+    }
+
+    const handleReport = () =>{
+      const doc = new jsPDF();
+      doc.text('Student details', 10, 10);
+      const tableData = filteredData.map(row => [row.reg_no, row.name, row.grade]);
+      doc.autoTable({
+        head: [['Student ID', 'Name', 'Grade']],
+        body: tableData
+      });
+
+      const pdfBlob = doc.output('blob');
+      const objectUrl = URL.createObjectURL(pdfBlob);
+      window.open(objectUrl);
     }
 
     return(
@@ -139,6 +157,13 @@ function StudentList() {
                 </tbody>
             </table>
             
+            <Button
+              variant="contained" 
+              startIcon={<DownloadIcon/> } 
+              sx={{marginTop:2,backgroundColor:red[900] ,color:"black" ,fontWeight: 900}}
+              onClick={()=>handleReport()}
+              >Generate Report
+              </Button>
           </div>
         </>
     )
