@@ -16,12 +16,11 @@ const handleSubmit = async (event) => {
 
     axios.post("http://localhost:5000/Teacher/AddSubject",newSubject).then(()=>{
         console.log("Subject Added")
+        navigate(`/Teacher/SubjectList`);
     }).catch((err)=>{
         console.log(err)
     })
-
-
-    navigate(`/Teacher/SubjectList`);
+ 
 };
     
 
