@@ -24,6 +24,7 @@ const handleSubmit = async (event) => {
         console.log(err)
     })
 
+    if(modules){
     await axios.get(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBYW4B8xzKMApVvzVevwJi4r4IcnuuZFnY&cx=66ac6fa7ccb7d4eca&q=${modules}&num=5`)
     .then((response)=>{       
         setSearchResults(response.data.items)
@@ -58,7 +59,9 @@ const handleSubmit = async (event) => {
           console.log('Email error', error);
       });
 
-      navigate(`/Teacher/MarkList`);
+    }
+
+    navigate(`/Teacher/MarkList`);
 }
     
 
@@ -99,15 +102,17 @@ return(
             </label>
             <br />
 
+            { 0 <mark &&  mark < 45 && (
             <label>
                 Weak Modules:
-                <input 
-                    type="text" 
-                    name="modules" 
-                    value={modules}
-                    onChange={(event) => setModules(event.target.value)}
+                <input
+                type="text"
+                name="modules"
+                value={modules}
+                onChange={(event) => setModules(event.target.value)}
                 />
             </label>
+          )}
             <br />
 
             {/* <label>

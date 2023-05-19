@@ -16,6 +16,7 @@ import {
         getStudentDetails, 
         getSubjectDetails, 
         getTeacherDetails, 
+        teacherLogin, 
         updateMark, 
         updateStudent,
         updateSubject,
@@ -24,10 +25,12 @@ import {
 
 const router = express.Router();
 
+router.post("/teacherLogin",teacherLogin)
 router.post("/addStudent", addStudent);
 router.post("/addSubject", addSubject);
 router.post("/addMark", addMark);
 router.post("/addTeacher", addTeacher);
+
 
 router.get("/getAllStudents",getAllStudents)
 router.get("/getAllSubjects",getAllSubjects)

@@ -5,7 +5,11 @@ import axios from "axios";
 
 function StudentReport() {
 
-  const [sid ,setSID] = useState()
+  const [id ,setSID] = useState();
+  const [data,setData] = useState();
+  // const [studentID,setStudent] = useState();
+  // const [subjectCode,setSubject] = useState();
+  // const [mark,setMark] = useState();
 
   useEffect(() => {
 
@@ -16,19 +20,22 @@ function StudentReport() {
 }, []);
 
 useEffect(() => {
-  if (sid) {
-    axios.get(`http://localhost:5000/student/getmarkBySID/${sid}`)
+  
+    axios.get(`http://localhost:5000/student/getmarkBySID/${id}`)
       .then(response => {
-        //console.log("response",response.data)
+        console.log("response",response.data)
+        setData(response.data)
         // setStudent(response.data.studentRegNO)
-        // setsubject(response.data.subjectCode)
+        // setSubject(response.data.subjectCode)
         // setMark(response.data.mark)
+
+        
       })
       .catch(error => {
         console.log(error);
       });
-  }
-}, [sid]);
+  
+}, [id]);
 
 return(
 
@@ -43,7 +50,7 @@ return(
         <table className="table">
             <thead>
             <tr>
-                <th>Student Name</th>
+                {/* <th>Student Name</th> */}
                 <th>Subject Name</th>
                 <th>Mark</th>
                 <th>Grade</th>
@@ -52,14 +59,14 @@ return(
                
             </thead>
             <tbody>
-            {/* {filteredData.map((row, index) => (
+             {data.map((row, index) => (
                 <tr key={index}>
-                <td>{row.studentRegNO}</td>
                 <td>{row.subjectCode}</td>
                 <td>{row.mark}</td>
+                <td>A</td>
 
             </tr>
-            ))} */}
+            ))}  
             </tbody>
         </table>
         

@@ -8,20 +8,21 @@ const navigate = useNavigate();
 const [reg_no, setRegNo] = useState("");
 const [name, setName] = useState("");
 const [subject, setSubject] = useState("");
-
+const [email, setEmail] = useState("");
 
 const handleSubmit = (event) => {
   
     event.preventDefault();
-    const newTeacher={ reg_no, name, subject}
+    const newTeacher={ reg_no, name, subject,email}
 
     axios.post("http://localhost:5000/Teacher/AddTeacher",newTeacher).then(()=>{
         console.log("Teacher Added")
+        navigate(`/Teacher/TeacherList`);
     }).catch((err)=>{
         console.log(err)
     })
 
-    navigate(`/Teacher/TeacherList`);
+
 };
 
 
@@ -58,6 +59,16 @@ return(
                     name="subject" 
                     value={subject}
                     onChange={(event) => setSubject(event.target.value)}
+                />
+            </label>
+            <br />
+            <label>
+                Email Address:
+                <input 
+                    type="text" 
+                    name="email" 
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
                 />
             </label>
             <br />

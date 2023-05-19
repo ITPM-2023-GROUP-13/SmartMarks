@@ -3,16 +3,42 @@ import Student from "../models/StudentModel.js";
 import Mark from "../models/MarksModel.js";
 import Teacher from "../models/TeacherModel.js";
 import Subject from "../models/SubjectModel.js";
+import generateToken from "../jwt.js";
+
+
+export const teacherLogin = async (req, res) => {
+  const { reg_no, email} = req.body;
+
+  try {
+    // Check if the user exists in the database
+    const user = await Teacher.findOne({ reg_no, email });
+
+    if (user) {
+      // User exists, perform login logic here
+      // For example, you can generate a JWT token and return it as the response
+      const token = generateToken(user);
+
+      res.status(200).json({ token });
+    } else {
+      // User not found
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 
 export const addStudent = async (req, res) => {
-    const { reg_no, grade, name  } = req.body;
+    const { reg_no, grade, name ,email } = req.body;
 
     const saveStudent = new Student({
  
       name: name,
       grade:grade,
-      reg_no:reg_no
+      reg_no:reg_no,
+      email:email
     });
   
     
@@ -27,13 +53,14 @@ export const addStudent = async (req, res) => {
   
 
   export const addTeacher = async (req, res) => {
-    const { reg_no, subject, name  } = req.body;
+    const { reg_no, subject, name ,email } = req.body;
 
     const saveTeacher = new Teacher({
  
       name: name,
       subject:subject,
-      reg_no:reg_no
+      reg_no:reg_no,
+      email:email
     });
   
     try {

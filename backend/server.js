@@ -10,13 +10,14 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 import teacherRoutes from './routes/TeacherRoutes.js';
+import studentRoutes from './routes/StudentRoutes.js';
 app.use(cors());
 
 
 app.use(bodyParser.json());
 
 app.use('/teacher', teacherRoutes);
-
+app.use('/student', studentRoutes);
 
 const URL = process.env.CONNECTION_URL;
 

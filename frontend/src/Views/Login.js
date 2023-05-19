@@ -17,27 +17,67 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { FormHelperText } from "@mui/material";
 
 
-function Login (){
+function Login() {
   const navigate = useNavigate();
   const theme = createTheme();
-  const [uType, setUserType] = useState();
-  const [password, setPassword] = useState();
-  const [userID, setUserID] = useState();
+  const [uType, setUserType] = useState("");
+  const [email, setEmail] = useState("");
+  const [userID, setUserID] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
+const handleSubmit = async (event) => {
+  event.preventDefault();
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-    
-    if (uType === "Teacher") {
-      navigate(`/Teacher/${userID}`,{ replace: true })
+  const errors = {};
+
+  if (!uType) {
+    errors.uType = "User type is required";
+  }
+
+  if (!email) {
+    errors.email = "Email is required";
+  }
+
+  if (!userID) {
+    errors.userID = "UserID is required";
+  }
+
+  if (uType === "Teacher" && !errors.email && !errors.userID) {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/teacher/teacherLogin",
+        {
+          reg_no: userID,
+          email: email,
+        },
+        // {
+        //   timeout: 10000, // Set the timeout to 10 seconds (adjust as needed)
+        // }
+      );
+
+      if (response.status === 200) {
+        const data = response.data;
+        console.log(data);
+        // Save the token to local storage or a state variable
+
+        navigate(`/Teacher/${userID}`, { replace: true });
+      } else {
+        console.log("User not found");
+      }
+    } catch (error) {
+      alert("User Not Found")
+      console.log("error",error);
     }
-    else if (uType === "Student") {
-      navigate(`/Student/${userID}`,{ replace: true })
-    }
-    
-  };
+  } else if (uType === "Student" && !errors.userID) {
+    navigate(`/Student/${userID}`, { replace: true });
+  }
+
+  setFormErrors(errors);
+};
 
 
 return(
@@ -51,7 +91,7 @@ return(
       sm={4}
       md={7}
       sx={{
-        backgroundImage: 'url(https://source.unsplash.com/random)',
+        backgroundImage: 'url(https://edunewsnetwork.files.wordpress.com/2021/07/view-heres-why-india-needs-to-be-future-ready-in-online-education.jpg)',
         backgroundRepeat: 'no-repeat',
         backgroundColor: (t) =>
           t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -81,28 +121,32 @@ return(
             margin="normal"
             required
             fullWidth
-            name="username"
+            name="userID"
             label="UserID"
             type=""
             id="username"
             autoComplete="current-password"
             value={userID}
             onChange={(event) => setUserID(event.target.value)}
+            error={!!formErrors.userID}
+            helperText={formErrors.userID}
           />
           <TextField
             margin="normal"
             required
             fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            name="email"
+            label="Email Address"
+            type=""
+            id="email"
+            autoComplete="current-email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            error={!!formErrors.email}
+            helperText={formErrors.email}
           />
               <Grid item xs={12} >
-                  <FormControl>
+                  <FormControl error={!!formErrors.uType} component="fieldset">
                     <FormLabel id="demo-controlled-radio-buttons-group">User Type</FormLabel>
                     <RadioGroup
                       row
@@ -115,6 +159,9 @@ return(
                       <FormControlLabel value="Student" control={<Radio />} label="Student" />
                       <FormControlLabel value="Teacher" control={<Radio />} label="Teacher" />
                     </RadioGroup>
+                    {formErrors.uType && (
+                        <FormHelperText>{formErrors.uType}</FormHelperText>
+                        )}
                   </FormControl>
               </Grid>
             
@@ -123,7 +170,7 @@ return(
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={(event) => handleSubmit(event.target.value)}
+            onClick={handleSubmit}
           >
             Sign In
           </Button>
